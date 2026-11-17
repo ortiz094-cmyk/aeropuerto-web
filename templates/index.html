@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión Aeroportuaria</title>
+    <!-- Vinculación del CSS para Flask (archivo en static/styles.css) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Respaldo: los desplegables se ven igual que los campos de texto */
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🛫 Sistema Aeroportuario </h1>
+
+    <div class="container">
+
+        <!-- Formulario 1: Pasajeros -->
+        <div class="card">
+            <h2>Registrar Nuevo Pasajero</h2>
+            <form action="/registrar_pasajero" method="POST">
+                <div class="form-group">
+                    <label for="nombres">Nombres:</label>
+                    <input type="text" id="nombres" name="nombres" required placeholder="Ej. Carlos">
+                </div>
+                <div class="form-group">
+                    <label for="apellidos">Apellidos:</label>
+                    <input type="text" id="apellidos" name="apellidos" required placeholder="Ej. Pérez">
+                </div>
+                <div class="form-group">
+                    <label for="pasaporte">Pasaporte:</label>
+                    <input type="text" id="pasaporte" name="pasaporte" required placeholder="Ej. AB123456">
+                </div>
+                <div class="form-group">
+                    <label for="correo">Correo Electrónico:</label>
+                    <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com">
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" id="telefono" name="telefono" placeholder="Ej. 3001234567">
+                </div>
+                <div class="form-group">
+                    <label for="id_nacionalidad">Nacionalidad (País):</label>
+                    <select id="id_nacionalidad" name="id_nacionalidad" required>
+                        <option value="">-- Selecciona un país --</option>
+                        {% for id_pais, nombre in paises %}
+                            <option value="{{ id_pais }}">{{ nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit">Guardar Pasajero</button>
+            </form>
+        </div>
+
+        <!-- Formulario 2: Vuelos -->
+        <div class="card">
+            <h2>Registrar Nuevo Vuelo</h2>
+            <form action="/registrar_vuelo" method="POST">
+                <div class="form-group">
+                    <label for="codigo_vuelo">Código Vuelo:</label>
+                    <input type="text" id="codigo_vuelo" name="codigo_vuelo" placeholder="Ej. AV-990" required>
+                </div>
+                <div class="form-group">
+                    <label for="id_aerolinea">Aerolínea:</label>
+                    <select id="id_aerolinea" name="id_aerolinea" required>
+                        <option value="">-- Selecciona una aerolínea --</option>
+                        {% for id_aerolinea, nombre in aerolineas %}
+                            <option value="{{ id_aerolinea }}">{{ nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="id_origen">Aeropuerto de Origen:</label>
+                    <select id="id_origen" name="id_origen" required>
+                        <option value="">-- Selecciona el origen --</option>
+                        {% for id_aeropuerto, texto in aeropuertos %}
+                            <option value="{{ id_aeropuerto }}">{{ texto }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="id_destino">Aeropuerto de Destino:</label>
+                    <select id="id_destino" name="id_destino" required>
+                        <option value="">-- Selecciona el destino --</option>
+                        {% for id_aeropuerto, texto in aeropuertos %}
+                            <option value="{{ id_aeropuerto }}">{{ texto }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="fecha_salida">Fecha y Hora Salida:</label>
+                    <input type="datetime-local" id="fecha_salida" name="fecha_salida" required>
+                </div>
+                <div class="form-group">
+                    <label for="fecha_llegada">Fecha y Hora Llegada:</label>
+                    <input type="datetime-local" id="fecha_llegada" name="fecha_llegada" required>
+                </div>
+                <button type="submit">Programar Vuelo</button>
+            </form>
+        </div>
+
+    </div>
+
+</body>
+</html>
